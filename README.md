@@ -30,6 +30,8 @@ We will be using the Countries of the World dataset from kaggle (link:https://ww
 * Industry	
 * Service
 
+![download (3)](https://user-images.githubusercontent.com/42713212/89377966-7088d980-d725-11ea-9835-6dc79286aaa9.png)
+
 **Interesting EDA on dataset**
 
 The below join plot graph not only shows the linear relationship between GDP per Capita, but it also shows the concentrations that countries belong in on the graph. There is a very high number of countries that have a very long GDP per Capita and also a very long literacy rate. This highlights the importance of literacy rates in increasing the GDP per Capita of a country.
@@ -56,6 +58,16 @@ In contrast, the region of ASIA (EX. NEAR EAST) has a very large standard devati
 
 I also plotted a boxplot diagram to confirm whether the above observations based on the plotly graph is correctly. The above observations are valified again by the boxplot diagram which shows the median, standard deviation and outliers of the regions clearly.
 
+![download (4)](https://user-images.githubusercontent.com/42713212/89397832-ebacb880-d742-11ea-8f5d-4a1b6bcac7bc.png)
 
-![download (3)](https://user-images.githubusercontent.com/42713212/89377966-7088d980-d725-11ea-9835-6dc79286aaa9.png)
+**Models that I tried out to train the model**
+- Linear Regression
+- L1 (Lasso) Regression
+- L2 (Ridge) Regression
+- SVM
+- Random Forest
+- Gradient Boosting
+
+**Results**
+
 
