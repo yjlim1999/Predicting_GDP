@@ -4,6 +4,8 @@
 
 The goal of this project is to understand the dataset, get some insights about it and finally train a model to predict GDP ($ per capita).
 
+![download (3)](https://user-images.githubusercontent.com/42713212/89377966-7088d980-d725-11ea-9835-6dc79286aaa9.png)
+
 ## **About the dataset**
 
 We will be using the Countries of the World dataset from kaggle (link:https://www.kaggle.com/fernandol/countries-of-the-world)
@@ -30,8 +32,6 @@ We will be using the Countries of the World dataset from kaggle (link:https://ww
 * Industry	
 * Service
 
-![download (3)](https://user-images.githubusercontent.com/42713212/89377966-7088d980-d725-11ea-9835-6dc79286aaa9.png)
-
 ## **Interesting EDA on dataset**
 
 The below join plot graph not only shows the linear relationship between GDP per Capita, but it also shows the concentrations that countries belong in on the graph. There is a very high number of countries that have a very long GDP per Capita and also a very long literacy rate. This highlights the importance of literacy rates in increasing the GDP per Capita of a country.
@@ -54,13 +54,66 @@ Very cool graph that is plotted using plotly. Plotly provides an interactive gra
 For example, for region such as NORTHERN AFRICA, it is clear from the plotly graph that the region will have a very low median GDP per capita and that the standard deviation will be small. Similarly, for the region of sub-suharan africa, the region will also have a small standard deviation and an even lower GDP per capita, judging from the whiteness of the plotly graph, which indicates a very low GDP per capita. 
 
 In contrast, the region of ASIA (EX. NEAR EAST) has a very large standard devation due to the presence of countries that have very high GDP per capita and very low GDP per capita. For example Cambodia(1900), China(5000), South Korea(17800) and Japan(28200) are located in the region. These countries have very different GDP per capita. The same goes to the region of Northern America. Even though high GDP per capita countries such as United States(37800) and Canada(29800) lies in that region, low GDP per capita countries such as Mexico(9000) also belongs there. Therefore, the very different colours on the graph of countries in both of the regions stated shows a very high standard deviation. 
+
 ![newplot](https://user-images.githubusercontent.com/42713212/89377910-564efb80-d725-11ea-9abb-441f6109d16f.png)
 
 I also plotted a boxplot diagram to confirm whether the above observations based on the plotly graph is correctly. The above observations are valified again by the boxplot diagram which shows the median, standard deviation and outliers of the regions clearly.
 
 ![download (4)](https://user-images.githubusercontent.com/42713212/89397832-ebacb880-d742-11ea-8f5d-4a1b6bcac7bc.png)
 
-**Models that I tried out to train the model**
+## **Brief summary of data pre-processing**
+
+**Handling missing data**
+
+```python
+data['net_migration'].fillna(0, inplace=True)
+data['infant_mortality'].fillna(0, inplace=True)
+data['gdp_per_capita'].fillna(2500, inplace=True)
+data['literacy'].fillna(data.groupby('region')['literacy'].transform('median'), inplace= True)
+data['phones'].fillna(data.groupby('region')['phones'].transform('median'), inplace= True)
+data['arable'].fillna(0, inplace=True)
+data['crops'].fillna(0, inplace=True)
+data['other'].fillna(0, inplace=True)
+data['climate'].fillna(0, inplace=True)
+data['birthrate'].fillna(data.groupby('region')['birthrate'].transform('mean'), inplace= True)
+data['deathrate'].fillna(data.groupby('region')['deathrate'].transform('median'), inplace= True)
+
+# For monaco, i will set the value for industry and service to be 0.05 and 0.78 respectively 
+data['industry'][138] = 0.05
+data['service'][138] = 0.78
+print(data['industry'][138])
+print(data['service'][138])
+
+# For western sahara, i will set the value for agriculture and industry to be 0.35 and 0.25 respectively.
+data['industry'][223] = 0.25
+data['agriculture'][223] = 0.35
+print(data['industry'][223])
+print(data['agriculture'][223])
+
+data['agriculture'].fillna(0.15, inplace=True)
+data['service'].fillna(0.8, inplace=True)
+data['industry'].fillna(0.05, inplace= True)
+```
+**Scaling**
+
+I will be using StandardScalar to standardise the features. It does so by removing the mean and scaling to unit variance.
+
+z = (x - u) / s
+
+```python
+sc_X = StandardScaler()
+X2_train = sc_X.fit_transform(X_train)
+X2_test = sc_X.fit_transform(X_test)
+y2_train = y_train
+y2_test = y_test
+```
+**Feature Selection**
+
+We will select only a portion of our features, the ones with coreelation score larger than -/+ 0.3 with gdp_per_capita.
+
+## **Models that I tried out to train the dataset**
+
+**6 models are used to train the dataset:**
 - Linear Regression (base model)
 - L1 (Lasso) Regression
 - L2 (Ridge) Regression
@@ -116,6 +169,9 @@ The best prediction performance was acheived using
 
 Taking into account that the gdp_per_capita values in the dataset ranges from 500 to 55100 USD.
 
-
+First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
 
 
