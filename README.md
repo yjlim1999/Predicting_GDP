@@ -65,6 +65,14 @@ I also plotted a boxplot diagram to confirm whether the above observations based
 
 **Handling missing data**
 
+Showing number of null values as a percentage. From the data, we can see that 14 out of 20 columns have null values. The column with the largest null value is climate, with a null percentage of 9.69. However, the null percentage is still quite small (<10%).
+
+![download (9)](https://user-images.githubusercontent.com/42713212/89403172-7fce4e00-d74a-11ea-85a8-449d0b0959f4.png)
+
+Interesting heatmap that not shows the density and rows that have missing data.
+
+![download (10)](https://user-images.githubusercontent.com/42713212/89403154-7b099a00-d74a-11ea-90cd-4f3d87875632.png)
+
 ```python
 data['net_migration'].fillna(0, inplace=True)
 data['infant_mortality'].fillna(0, inplace=True)
@@ -121,6 +129,27 @@ We will select only a portion of our features, the ones with coreelation score l
 - Random Forest
 - Gradient Boosting
 
+**Optimization for Random Forest and Gradient Boosting**
+
+Random Forest
+
+* max_features = max number of features considered for splitting a node : ['sqrt', 'auto'],
+* min_samples_leaf = min number of data points allowed in a leaf node : [1, 3, 5]
+* max_depth = max number of levels in each decision tree (left it out because it takes too long to run)
+* min_samples_split = min number of data points placed in a node before the node is split : [2, 5, 10]
+* n-estimators = number of trees in the foreset : [100,500,1000]
+* bootstrap = method for sampling data points (with or without replacement) : [False, True]
+
+Gradient Boosting
+
+* n-estimators: 100, 500, 1000
+* learning_rate: 0.001, 0.01, 0.1, 1
+* max_depth: 3, 5, 8
+* subsample = The fraction of observations to be selected for each tree. Selection is done by random sampling: 0.7, 1 (Values lower than 1 generally lead to a reduction of variance and an increase in bias)
+* min_samples_leaf: 1, 20
+* min_samples_split: 0.5-1% of our data --> we have 227 datapoints --> 10 -20
+* max_features: 4, 7 (sqrt of number of features is a good guess)
+
 ## **Results**
 
 Feature importance for linear regression model. From the bar graph, it is derived that the importance of phones is almost 3 times more important than the next most important feature which is region_WESTERN EUROPE. The least important feature in X4 is region_ASIA (EX NEAR EAST) which makes sense due to the huge variation in GDP per Capita in the region. For example,Cambodia(1900), China(5000), Singapore(23700) and Japan(28200) are located all in the region with very huge varying levels of income. Therefore it is can be understandable that region_ASIA (EX. NEAR EAST) plays a small importance in determining GDP per Capita/ unable to predict GDP per Capita. It would be good to use these observations into narrowing the features that will be use to determine GDP per Capita.
@@ -149,6 +178,12 @@ Metrics used:
 
 ## **Conclusion**
 
+| Accuracy Indicators | Linear Regression  | Ridge Regression | Lasso Regression | Optimized SVM | Random Forest | Gradiant Boosting |
+| --- | --- | --- | --- | --- | --- | --- |
+| `MAE` | 2854.65 | 2854.61 | 2852.57 | 6386.99 | 2127.80 | 2093.38 |
+| `RMSE` | 3760.87 | 3760.74 | 3784.96 | 9131.48 | 3065.70 | 3124.43 |
+| `R2_Score` | 0.83 | 0.83 | 0.83 | -0.0091 | 0.89 | 0.88 |
+
 In this project, we used countries_of_the_world dataset to predict GDP per Capita. We used 6 different learning regressors (Linear Regression, L1 and L2 regularization, SVM, Random Forest, and Gradiant Boosting) were tested.
 
 Depending on the accuracy indicator, Random Forest and Gradient Boosting performed the best while SVM acheived the worst performance of the 4.
@@ -161,17 +196,19 @@ The best prediction performance was acheived using
 * Root mean squared error (RMSE): 3065.70
 * R-squared Score (R2_Score): 0.89
 
+![download (11)](https://user-images.githubusercontent.com/42713212/89403286-a8564800-d74a-11ea-93d6-496d5b79f134.png)
+
 2) Gradient Boosting regressor, using all features in the dataset,
 
 * Mean Absolute Error (MAE): 2093.38
 * Root mean squared error (RMSE): 3124.44
 * R-squared Score (R2_Score): 0.88
 
-Taking into account that the gdp_per_capita values in the dataset ranges from 500 to 55100 USD.
+![download (12)](https://user-images.githubusercontent.com/42713212/89403280-a68c8480-d74a-11ea-94fd-98f0857871b9.png)
 
-First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+
+
+
+
 
 
